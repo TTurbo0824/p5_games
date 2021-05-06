@@ -5,8 +5,17 @@ let buttons = [];
 let helium;
 let interval = 70;
 
-let wordList = ["hamburger", "sandwich", "croissant", "ketchup", "popcorn", "noodles"];
+let wordList = [
+  ["food", "hamburger"],
+  ["food", "sandwich"],
+  ["food", "croissant"],
+  ["food", "ketchup"],
+  ["food", "popcorn"],
+  ["food", "noodles"]
+];
+
 let word;
+let category;
 
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
@@ -19,7 +28,10 @@ let wordLength;
 
 function setup() {
   createCanvas(600, 700);
-  word = random(wordList);
+  num = int(random(wordList.length));
+  word = wordList[num][1];
+  category = wordList[num][0];
+
   wordLength = word.length;
   helium = createVector(0, random(-0.01, -0.05));
   for (var i = 0; i < word.length; i++) {
@@ -38,7 +50,11 @@ function setup() {
     }
     buttons.push(Button);
   }
+  
   console.log(word);
+
+  let button = createButton("New Game");
+  button.mousePressed(resetSketch);
 }
 
 function draw() {
@@ -79,12 +95,14 @@ function draw() {
 
   push();
   fill(0);
+  textStyle(NORMAL);
   textSize(20);
   text(life + " Lives Left", width / 2, 50);
+  textSize(20);
   textStyle(ITALIC);
-  text(word.length + "-letter", width - 120, 50);
+  text(category.toUpperCase() + "   " + word.length + "-letter", width - 120, 100);
   pop();
-  
+
   push();
   if (life == 0) {
     fill(255);
@@ -99,19 +117,26 @@ function draw() {
     textStyle(BOLD);
     text("GAME OVER!", width / 2, height / 2)
   }
+  stroke(0);
+  strokeWeight(10);
+point(width / 2 - 80, height/2 + 58)
+  point(width/2 + 80, height/2 + 58)
 
   if (wordLength == 0) {
-    fill(255);
-    rectMode(CENTER);
-    stroke(0);
-    strokeWeight(5);
-    rect(width / 2, height / 2 - 16, 375, 120, 15);
     fill(0);
     noStroke();
     textAlign(CENTER);
     textSize(50);
     textStyle(BOLD);
-    text("STAGE CLEAR!", width / 2, height / 2)
+    text("STAGE CLEAR!", width / 2, height / 2);
+    textStyle(NORMAL);
+    textSize(25);
+    fill(255);
+    stroke(0);
+    strokeWeight(3);
+    rectMode(CENTER);
+    rect(width / 2, height / 2 + 75, 160, 55, 15);
+    text("Next Stage", width / 2, height / 2 + 80);
   }
   pop();
 }
@@ -142,7 +167,11 @@ function mousePressed() {
     life -= 1;
   }
   // console.log(target, scoring);
-
+ if (wordLength == 0) {
+   if (mouseX > width / 2 - 80 && mouseX < width/2 + 80 &&  mouseY > height/2 + 58  &&  mouseY < height/2 + 102) {
+      resetSketch();
+    }
+  }
 }
 
 class Buttons {
@@ -213,9 +242,40 @@ class Balloons {
 
   show() {
     noStroke();
+    textStyle(NORMAL);
     fill(this.c);
     ellipse(this.pos.x, this.pos.y, this.r);
     // fill(0);
     text(this.letter, this.pos.x, this.pos.y);
   }
+}
+
+function resetSketch() {
+  balloons = [];
+
+  push();
+  num = int(random(wordList.length));
+  word = wordList[num][1];
+  category = wordList[num][0];
+
+  wordLength = word.length;
+  helium = createVector(0, random(-0.01, -0.05));
+  for (var i = 0; i < word.length; i++) {
+    if (i < 7) {
+      Balloon = new Balloons((i + 1) * interval, height / 2 - 75, random(colors), 0, word[i]);
+    } else {
+      Balloon = new Balloons((i - 6) * interval, height / 2 + 25, random(colors), 0, word[i]);
+    }
+    balloons.push(Balloon);
+  }
+  for (var j = 0; j < letters.length; j++) {
+    if (j < 13) {
+      Button = new Buttons(j, height - 120, j, 255);
+    } else {
+      Button = new Buttons(j - 13, height - 85, j, 255);
+    }
+    buttons.push(Button);
+  }
+  console.log(word);
+  pop();
 }
