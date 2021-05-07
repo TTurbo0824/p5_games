@@ -1,18 +1,22 @@
-let myFont, myFont2;
+let myFont1, myFont2;
+
 let Balloon;
-let balloons = [];
+let balloons;
 let Button;
-let buttons = [];
+let buttons;
 let helium;
 let interval = 70;
 
+let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 let wordList = [
   ["Food", "hamburger"],
   ["Food", "sandwich"],
   ["Food", "croissant"],
-  ["Food", "ketchup"],
+  ["Food", "yogurt"],
   ["Food", "popcorn"],
   ["Food", "noodles"],
+  ["Food", "chocolate"],
+  ["Food", "tamales"],
   ["Animal", "raccoon"],
   ["Animal", "leopard"],
   ["Animal", "rhinoceros"],
@@ -36,22 +40,19 @@ let wordList = [
   ["Color", "turquoise"],
   ["Color", "ultramarine"]
 ];
-
 let word;
+let wordLength;
 let category;
-
-let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
 let target;
+
 let colors = ["LightSalmon", "Crimson", "Coral", "OrangeRed", "DarkOrange", "OliveDrab", "ForestGreen", "Lime", "LightSeaGreen", "Teal", "Cyan", "DeepSkyBlue", "Gold", "Yellow", "Violet", "Fuchsia", "DarkViolet", "Navy"];
 
 let life = 10;
 // let life = 0;
-let wordLength;
 
 function preload() {
-  myFont = loadFont('Brokenbrush.ttf');
-  myFont2 = loadFont('MagicMushroom pu.otf');
+  myFont1 = loadFont('Brokenbrush.ttf');
+  myFont2 = loadFont('MagicMushroom.otf');
 }
 
 function setup() {
@@ -66,7 +67,6 @@ function draw() {
   fill(255);
   rectMode(CORNER)
   rect(12, 12, width - 25, height - 25, 10);
-  noFill();
   noStroke();
 
   push();
@@ -96,61 +96,56 @@ function draw() {
     buttons[j].show();
   }
 
-  push();
   fill(0);
-  textStyle(NORMAL);
   textSize(24);
-  textFont('Helvetica');
+  textFont('Arial');
   text("💛 ✖️", 60, 50);
-  textFont(myFont);
+  textFont(myFont1);
   text(life, 105, 50);
   textSize(22);
   textAlign(LEFT);
   text(category + " " + word.length + "-letter", width - 190, 50);
-  pop();
+
   push();
   if (life == 0) {
-    background(204,134, 9, 50);
-
-    fill(255);
+    background(204, 134, 9, 50);
     rectMode(CENTER);
     stroke(0);
     strokeWeight(3);
-    rect(width / 2, height / 2 - 16, 275, 100, 15);
-    fill(0);
+    fill(255, 193, 37);
+    rect(width / 2, height / 2 - 36, 290, 75, 50);
+    strokeWeight(2);
+    fill(255);
+    rect(width / 2, height / 2 + 67, 145, 55, 10);
     noStroke();
+    fill(0);
     textAlign(CENTER);
-    textSize(50);
-    textStyle(BOLD);
-    textFont(myFont);
-    text("GAME OVER!", width / 2, height / 2)
+    textSize(45);
+    textFont(myFont2);
+    text("GAME OVER!", width / 2, height / 2 - 20);
+    textSize(25);
+    textFont(myFont1);
+    text("New Game", width / 2, height / 2 + 75);
   }
 
   if (wordLength == 0) {
-    background(204,134, 9, 50);
-    noStroke();
+    background(204, 134, 9, 50);
     stroke(0);
-  strokeWeight(3);
+    strokeWeight(3);
     fill(255, 193, 37);
     rectMode(CENTER);
     rect(width / 2, height / 2 - 36, 320, 75, 50);
-
+    fill(255);
+    strokeWeight(2);
+    rect(width / 2, height / 2 + 67, 145, 55, 10);
+    noStroke();
+    fill(0);
     textAlign(CENTER);
     textSize(45);
-    textStyle(BOLD);
-    fill(0);
     textFont(myFont2);
-    noStroke();
     text("STAGE CLEAR!", width / 2, height / 2 - 20);
-    textStyle(NORMAL);
     textSize(25);
-    fill(255);
-    stroke(0);
-    strokeWeight(2);
-    rect(width / 2, height / 2 + 67, 160, 55, 10);
-    noStroke();
-    fill(0);
-    textFont(myFont);
+    textFont(myFont1);
     text("Next Stage", width / 2, height / 2 + 75);
   }
   pop();
@@ -181,7 +176,47 @@ function mousePressed() {
     if (mouseX > width / 2 - 80 && mouseX < width / 2 + 80 && mouseY > height / 2 + 39 && mouseY < height / 2 + 95) {
       resetGame();
     }
+
   }
+  if (life == 0) {
+    if (mouseX > width / 2 - 80 && mouseX < width / 2 + 80 && mouseY > height / 2 + 39 && mouseY < height / 2 + 95) {
+      life = 10;
+      resetGame();
+    }
+  }
+}
+
+function resetGame() {
+  balloons = [];
+  buttons = [];
+
+  var num = Math.floor(Math.random() * (wordList.length));
+  word = wordList[num][1];
+  // word = "a";
+  category = wordList[num][0];
+  wordLength = word.length;
+  helium = createVector(0, random(-0.01, -0.05));
+
+  push();
+  for (var i = 0; i < word.length; i++) {
+    if (i < 7) {
+      Balloon = new Balloons((i + 1) * interval, height / 2 - 75, random(colors), 0, word[i]);
+    } else {
+      Balloon = new Balloons((i - 6) * interval, height / 2 + 25, random(colors), 0, word[i]);
+    }
+    balloons.push(Balloon);
+  }
+
+  for (var j = 0; j < letters.length; j++) {
+    if (j < 13) {
+      Button = new Buttons(j, height - 120, j, 255);
+    } else {
+      Button = new Buttons(j - 13, height - 85, j, 255);
+    }
+    buttons.push(Button);
+  }
+  pop();
+  // console.log(word); // uncomment to reveal the word
 }
 
 class Buttons {
@@ -253,43 +288,9 @@ class Balloons {
 
   show() {
     noStroke();
-    textStyle(NORMAL);
     fill(this.c);
     ellipse(this.pos.x, this.pos.y, this.r);
-    // fill(0);
-    text(this.letter, this.pos.x, this.pos.y);
+    // fill(0); // uncomment to reveal the word
+    text(this.letter, this.pos.x - 5, this.pos.y + 5);
   }
-}
-
-function resetGame() {
-  balloons = [];
-  buttons = [];
-
-  push();
-  num = Math.floor(Math.random() * (wordList.length));
-  word = wordList[num][1];
-  // word = "a";
-  category = wordList[num][0];
-
-  wordLength = word.length;
-  helium = createVector(0, random(-0.01, -0.05));
-  for (var i = 0; i < word.length; i++) {
-    if (i < 7) {
-      Balloon = new Balloons((i + 1) * interval, height / 2 - 75, random(colors), 0, word[i]);
-    } else {
-      Balloon = new Balloons((i - 6) * interval, height / 2 + 25, random(colors), 0, word[i]);
-    }
-    balloons.push(Balloon);
-  }
-
-  for (var j = 0; j < letters.length; j++) {
-    if (j < 13) {
-      Button = new Buttons(j, height - 120, j, 255);
-    } else {
-      Button = new Buttons(j - 13, height - 85, j, 255);
-    }
-    buttons.push(Button);
-  }
-  console.log(word);
-  pop();
 }
