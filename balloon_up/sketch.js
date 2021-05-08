@@ -1,3 +1,7 @@
+// Balloon Up 🎈
+// Created by KJ Ha, Balloon Up is a word-guessing game inspired by Hangman.
+// Please visit https://editor.p5js.org/kh1785/present/IGD-Ih3_d to try it for yourself.
+
 let myFont1, myFont2;
 
 let Balloon;
