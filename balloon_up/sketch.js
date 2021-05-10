@@ -51,12 +51,12 @@ let target;
 
 let colors = ["LightSalmon", "Crimson", "Coral", "OrangeRed", "DarkOrange", "OliveDrab", "ForestGreen", "Lime", "LightSeaGreen", "Teal", "Cyan", "DeepSkyBlue", "Gold", "Yellow", "Violet", "Fuchsia", "DarkViolet", "Navy"];
 
+// Adjust the number of lives
 let life = 10;
-// let life = 0;
 
 function preload() {
-  myFont1 = loadFont('Brokenbrush.ttf');
-  myFont2 = loadFont('MagicMushroom.otf');
+  myFont1 = loadFont('./fonts/Brokenbrush.ttf');
+  myFont2 = loadFont('./fonts/MagicMushroom.otf');
 }
 
 function setup() {
