@@ -1,3 +1,7 @@
+// Modified from Nature of Code's repository, Steering Behavior Examples https://editor.p5js.org/codingtrain/collections/S4nJEexPF
+// KJ Ha
+// Please visit https://editor.p5js.org/kh1785/present/_YHzwobV8  to try it for yourself.
+
 let vehicle;
 let target
 let protector;
