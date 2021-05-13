@@ -1,3 +1,6 @@
+// Animal Run is a voice-controlled game designed to help players to refresh their vocabulary.
+// Created by KJ Ha
+
 // animals
 let animalList = {
   fox: "🦊",
