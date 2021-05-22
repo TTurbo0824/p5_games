@@ -1,3 +1,8 @@
+// Guess the Emoji
+// Guess the Emoji is an interactive game designed to stimulate logical thinking and agility through an entertaining interface.
+// Created by KJ Ha
+// Please visit https://guess-the-emoji.glitch.me/ to try it for yourself.
+
 let video;
 let poseNet;
 let poses = [];

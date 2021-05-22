@@ -1,4 +1,8 @@
-// animals
+// Animal Run
+// Animal Run is a voice-controlled game designed to help players to refresh their vocabulary.
+// Created by KJ Ha
+// Please visit https://animal-run.glitch.me/ to try it for yourself.
+
 let animalList = {
   fox: "🦊",
   cat: "🐱",
@@ -39,6 +43,7 @@ let mode = 0; // starting with main page
 
 function preload() {
   myfont = loadFont('fonts/MagicMushroom pu.otf');
+  // myfont = loadFont("https://cdn.glitch.com/354faff7-6997-4a2c-b455-e100b40b4e5e%2FMagicMushroom%20pu.otf?v=1607415663136");
 }
 
 function setup() {
