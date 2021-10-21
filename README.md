@@ -1,7 +1,7 @@
 # P5 games by KJ Ha
 A repository of games created with p5.js<br/>
 - [Guess the Emoji](#Guess-the-Emoji)
-- [Animal Run](#Anima-Run)<br/>
+- [Animal Run](#Animal-Run)<br/>
 - [P5 Rocket](#P5-Rocket)<br/>
 - [Balloon up](#Balloon-up)
 <br/>
